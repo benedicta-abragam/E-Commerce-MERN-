@@ -10,7 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("✅ DB Connected Successfully"))
@@ -88,7 +90,4 @@ const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
-});
-app.get("/", (req, res) => {
-  res.send("Backend is running");
 });
