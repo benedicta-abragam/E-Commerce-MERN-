@@ -17,7 +17,7 @@ export default function Profile() {
         setEmail(user.email)
 
         // Fetch orders of that user
-        axios.get(`http://localhost:8000/orders/${user.email}`)
+       axios.get(`${import.meta.env.VITE_API_URL}/orders/${user.email}`)
           .then((res) => setOrders(res.data))
           .catch((err) => console.log(err))
 

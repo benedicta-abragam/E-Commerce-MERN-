@@ -30,7 +30,7 @@ export default function Checkout() {
     };
 
     try {
-      await axios.post("http://localhost:8000/orders", orderData);
+     await axios.post(`${import.meta.env.VITE_API_URL}/orders`, orderData);
       alert("Order placed successfully!");
       navigate("/profile");   // go to profile after order
     } catch (err) {
