@@ -12,11 +12,11 @@ export default function App() {
   return (
     <Routes>
 
-      {/* Auth Pages - NO Navbar/Footer */}
+      {/* Auth Pages */}
       <Route path="/" element={<Login />} />
       <Route path="/signin" element={<Signin />} />
 
-      {/* Protected Pages - WITH Navbar/Footer */}
+      {/* Protected Pages */}
       <Route element={<Layout />}>
         <Route path="/home" element={<Home />} />
         <Route path="/books" element={<Books />} />

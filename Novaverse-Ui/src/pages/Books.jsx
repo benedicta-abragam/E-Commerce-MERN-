@@ -1,163 +1,138 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react"
+import axios from "axios"
+import { CartContext } from "../context/Cartcontext.jsx"
 
+export default function Books() {
 
+  const { addToCart } = useContext(CartContext)
 
-export default function Book() {
+  const [books, setBooks] = useState([])
+  const [search, setSearch] = useState("")
+  const [genre, setGenre] = useState("")
+  const [selectedBook, setSelectedBook] = useState(null)
 
-    const [books, setBooks] = useState([]);
-    const [search, setSearch] = useState("");
-    const [genre, setGenre] = useState("");
-    const [selectedBook, setSelectedBook] = useState(null);
-    const [cart, setCart] = useState([])
+  // Fetch books from backend
+  useEffect(() => {
+    axios.get("http://localhost:8000/books")
+      .then((res) => setBooks(res.data))
+      .catch((err) => console.log(err))
+  }, [])
 
-    // Fetch books
-    useEffect(() => {
-        axios.get("http://localhost:8000/books")
-            .then((res) => {
-                setBooks(res.data);
-            })
-            .catch((err) => {
-                console.log("Error fetching books:", err);
-            });
-    }, []);
+  // Filter books
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(search.toLowerCase()) &&
+    (genre === "" || book.genre === genre)
+  )
 
-    // Filter 
-    const filtered = books.filter((book) =>
-        book.title.toLowerCase().includes(search.toLowerCase()) &&
-        (genre === "" || book.genre === genre)
-    );
-    //  Add to Cart
-    const addToCart = (book) => {
-        // check if already in cart
-        const exist = cart.find((item) => item._id === book._id);
+  return (
+    <div className="px-6 md:px-16 py-10">
 
-        if (exist) {
-            // increase quantity
-            exist.qty = exist.qty + 1;
-            setCart([...cart]);
-        } else {
-            // add new item
-            setCart([...cart, { ...book, qty: 1 }]);
-        }
-    };
+      <h2 className="text-3xl font-bold mb-8">Books</h2>
 
-    return (
-        <div className="px-6 md:px-16 py-10">
+      {/* Search & Filter */}
+      <div className="flex gap-4 mb-8">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border rounded-lg px-4 py-2"
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
-            <h2 className="text-3xl font-bold mb-8">Books</h2>
+        <select
+          className="border rounded-lg px-4 py-2"
+          onChange={(e) => setGenre(e.target.value)}
+        >
+          <option value="">All Genres</option>
+          <option>Love</option>
+          <option>Broken</option>
+          <option>Programming</option>
+          <option>Poem</option>
+        </select>
+      </div>
 
-            {/* Filters */}
-            <div className="flex flex-row gap-4 mb-8">
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    className="border rounded-lg w-50 md:w-60 px-4 py-2"
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+      {/* Books Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-                <select
-                    className="border w-40 rounded-lg px-4 py-2"
-                    onChange={(e) => setGenre(e.target.value)}
-                >
-                    <option value="">All Genres</option>
-                    <option>Love</option>
-                    <option>Broken</option>
-                    <option>Programming</option>
-                    <option>Poem</option>
-                </select>
-            </div>
+        {filteredBooks.map((book) => (
+          <div
+            key={book._id}
+            onClick={() => setSelectedBook(book)}
+            className="bg-white rounded-xl shadow-md hover:shadow-xl p-4 cursor-pointer"
+          >
 
-            {/* Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <img
+              src={`/books/${book.image}`}
+              alt={book.title}
+              className="h-48 mx-auto object-contain"
+            />
 
-                {filtered.map((book) => (
+            <h3 className="font-semibold mt-3">{book.title}</h3>
 
-                    <div
-                        key={book._id}
-                        className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 p-4 flex flex-col"
-                    >
+            <p className="text-sm text-gray-500">{book.genre}</p>
 
-                        <div className="h-56 flex items-center justify-center bg-gray-50 rounded-lg">
-                            <img
-                                src={`/books/${book.image}`}
-                                className="max-h-full object-contain"
-                            />
-                        </div>
+            {/* ⭐ Rating Added */}
+            <p className="text-yellow-500 text-sm mt-1">
+              ⭐ {book.rating} / 5
+            </p>
 
-                        <h3 className="font-semibold mt-4 text-gray-800">
-                            {book.title}
-                        </h3>
+            <p className="font-bold mt-2">₹{book.price}</p>
 
-                        <p className="text-sm text-gray-500">
-                            {book.genre}
-                        </p>
+          </div>
+        ))}
 
-                        <p className="text-yellow-500 text-sm mt-1">
-                            ⭐ {book.rating} / 5
-                        </p>
+      </div>
 
-                        <p className="font-bold text-secondary mt-2">
-                            ₹{book.price}
-                        </p>
+      {/* Modal Popup */}
+      {selectedBook && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
 
-                        <button className="mt-3 bg-primary text-gray-800 py-2 rounded-lg hover:bg-secondary hover:text-white transition"
-                         onClick={() => setSelectedBook(book)}>
-                            Add to Cart
-                        </button>
+          <div className="bg-white p-6 rounded-xl w-[90%] md:w-[400px] relative">
 
-                    </div>
-                ))}
+            {/* Close Button */}
+            <button
+              className="absolute top-2 right-4 text-xl"
+              onClick={() => setSelectedBook(null)}
+            >
+              ×
+            </button>
 
-            </div>
+            <img
+              src={`/books/${selectedBook.image}`}
+              alt={selectedBook.title}
+              className="h-56 mx-auto object-contain"
+            />
 
-            {/* Modal */}
-            {selectedBook && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <h3 className="text-xl font-bold mt-4">
+              {selectedBook.title}
+            </h3>
 
-                    <div className="bg-white rounded-2xl p-6 w-[90%] md:w-[500px] relative">
+            <p className="text-gray-500">
+              {selectedBook.genre}
+            </p>
 
-                        <button
-                            className="absolute top-3 right-4 text-2xl"
-                            onClick={() => setSelectedBook(null)}
-                        >
-                            x
-                        </button>
+            {/* ⭐ Rating Also Here */}
+            <p className="text-yellow-500 mt-1">
+              ⭐ {selectedBook.rating} / 5
+            </p>
 
-                        <div className="flex justify-center">
-                            <img
-                                src={`/books/${selectedBook.image}`}
-                                alt={selectedBook.title}
-                                className="h-60 object-contain"
-                            />
-                        </div>
+            <p className="font-bold text-lg mt-2">
+              ₹{selectedBook.price}
+            </p>
 
-                        <h3 className="text-xl font-bold mt-4">
-                            {selectedBook.title}
-                        </h3>
+            <button
+              className="mt-4 w-full bg-secondary text-white py-2 rounded"
+              onClick={() => {
+                addToCart(selectedBook)
+                setSelectedBook(null)   // auto close popup
+              }}
+            >
+              Add to Cart
+            </button>
 
-                        <p className="text-gray-500">
-                            {selectedBook.genre}
-                        </p>
-
-                        <p className="text-yellow-500 mt-1">
-                            ⭐ {selectedBook.rating} / 5
-                        </p>
-
-                        <p className="font-bold text-lg mt-2">
-                            ₹{selectedBook.price}
-                        </p>
-
-                        <button
-                            className="mt-4 w-full bg-primary text-black py-2 rounded-lg hover:bg-secondary transition"
-                           onClick={() => addToCart(selectedBook)}>
-                            Add to Cart
-                        </button>
-
-                    </div>
-                </div>
-            )}
-
+          </div>
         </div>
-    );
+      )}
+
+    </div>
+  )
 }

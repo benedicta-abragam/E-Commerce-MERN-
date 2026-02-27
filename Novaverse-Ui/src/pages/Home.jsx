@@ -4,7 +4,7 @@ import logo from "../assets/logo.jpeg";
 
 export default function Home() {
   const navigate = useNavigate()
-  const book = ()=>{
+  const BookExplore= ()=>{
       navigate("/books")
   }
  
@@ -44,7 +44,7 @@ export default function Home() {
 
           {/* Button */}
           <div className="text-center md:text-left">
-            <button onClick={book} className="bg-secondary text-white px-7 py-3 rounded-xl shadow-md hover:scale-105 transition duration-300">
+            <button onClick={BookExplore} className="bg-secondary text-white px-7 py-3 rounded-xl shadow-md hover:scale-105 transition duration-300">
               Explore Books
             </button>
           </div>

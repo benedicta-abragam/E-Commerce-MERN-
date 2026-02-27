@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth"
 import { auth, provider } from "../firebase.config"
 import logo from "../assets/logo.jpeg"
-import { onAuthStateChanged } from "firebase/auth"
 
 
 export default function Signin() {

@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react"
-import { onAuthStateChanged } from "firebase/auth"
+import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
 import { auth, provider } from "../firebase.config"
@@ -12,12 +11,7 @@ export default function Login() {
   const [error, setError] = useState("")
 
   const navigate = useNavigate()
-//  useffect
-useEffect(() => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) navigate("/home")
-  })
-}, [])
+
 
   const loginUser = () => {
     setError("")
