@@ -25,12 +25,12 @@ export default function Books() {
   )
 
   return (
-    <div className="px-6 md:px-16 py-10">
+   <div className="px-4 md:px-16 py-10 max-w-7xl mx-auto overflow-x-hidden">
 
       <h2 className="text-3xl font-bold mb-8">Books</h2>
 
       {/* Search & Filter */}
-      <div className="flex gap-4 mb-8">
+   <div className="flex flex-col md:flex-row gap-4 mb-8">
         <input
           type="text"
           placeholder="Search..."
@@ -63,7 +63,7 @@ export default function Books() {
             <img
               src={`/books/${book.image}`}
               alt={book.title}
-              className="h-48 mx-auto object-contain"
+             className="h-48 w-full object-contain"
             />
 
             <h3 className="font-semibold mt-3">{book.title}</h3>

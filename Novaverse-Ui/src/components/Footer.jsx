@@ -3,8 +3,7 @@ export default function Footer() {
     <footer className="bg-gray-900 text-white px-6 md:px-16 py-12">
       
       {/* Top Section */}
-      <div className="grid grid-cols-3  md:grid-cols-3 gap-10 text-center md:text-xl sm:text-left">
-
+     <div className="grid grid-cols-2 md:grid-cols-3 gap-10 text-center md:text-left">
         {/* Brand */}
         <div>
           <h2 className="text-2xl font-bold mb-4">NovaVerse</h2>
