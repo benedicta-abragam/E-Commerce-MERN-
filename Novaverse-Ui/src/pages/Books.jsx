@@ -70,7 +70,7 @@ export default function Books() {
 
             <p className="text-sm text-gray-500">{book.genre}</p>
 
-            {/* ⭐ Rating Added */}
+          
             <p className="text-yellow-500 text-sm mt-1">
               ⭐ {book.rating} / 5
             </p>
@@ -93,7 +93,7 @@ export default function Books() {
               className="absolute top-2 right-4 text-xl"
               onClick={() => setSelectedBook(null)}
             >
-              ×
+              X
             </button>
 
             <img
@@ -110,7 +110,7 @@ export default function Books() {
               {selectedBook.genre}
             </p>
 
-            {/* ⭐ Rating Also Here */}
+          
             <p className="text-yellow-500 mt-1">
               ⭐ {selectedBook.rating} / 5
             </p>
@@ -123,7 +123,7 @@ export default function Books() {
               className="mt-4 w-full bg-secondary text-white py-2 rounded"
               onClick={() => {
                 addToCart(selectedBook)
-                setSelectedBook(null)   // auto close popup
+                setSelectedBook(null)  
               }}
             >
               Add to Cart

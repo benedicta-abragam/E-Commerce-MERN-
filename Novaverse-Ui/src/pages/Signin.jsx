@@ -96,7 +96,7 @@ export default function Signin() {
           </Link>
         </p>
 
-        {/* 🔥 Google */}
+        {/* Google */}
         <button
           onClick={googleSignup}
           className="w-full mt-4 py-2 rounded-xl border border-secondary 

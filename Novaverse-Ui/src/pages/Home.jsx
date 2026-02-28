@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import booklogo from "../assets/book-img.png"
-import logo from "../assets/logo.jpeg";
+import logo from "../assets/logo.jpeg"
 
 export default function Home() {
   const navigate = useNavigate()
@@ -62,5 +62,5 @@ export default function Home() {
 
       </div>
     </section>
-  );
+  )
 }

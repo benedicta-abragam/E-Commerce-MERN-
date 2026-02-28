@@ -16,7 +16,7 @@ export default function Profile() {
       if (user) {
         setEmail(user.email)
 
-        // Fetch orders of that user
+        // Fetch orders
        axios.get(`${import.meta.env.VITE_API_URL}/orders/${user.email}`)
           .then((res) => setOrders(res.data))
           .catch((err) => console.log(err))
@@ -55,7 +55,7 @@ export default function Profile() {
             <p className="mt-2 font-semibold">Items:</p>
             {order.items.map((item) => (
               <div key={item._id} className="ml-4">
-                {item.title} × {item.qty}
+                {item.title} x {item.qty}
               </div>
             ))}
 

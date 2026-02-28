@@ -6,16 +6,16 @@ import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
 
-  const { cart, totalPrice } = useContext(CartContext);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const navigate = useNavigate();
+  const { cart, totalPrice } = useContext(CartContext)
+  const [name, setName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [address, setAddress] = useState("")
+  const navigate = useNavigate()
 
   const placeOrder = async () => {
 
     if (!name || !phone || !address) {
-      alert("Please fill all details");
+      alert("Please fill all details")
       return;
     }
 
@@ -30,11 +30,11 @@ export default function Checkout() {
     };
 
     try {
-     await axios.post(`${import.meta.env.VITE_API_URL}/orders`, orderData);
-      alert("Order placed successfully!");
-      navigate("/profile");   // go to profile after order
+     await axios.post(`${import.meta.env.VITE_API_URL}/orders`, orderData)
+      alert("Order placed successfully!")
+      navigate("/profile")
     } catch (err) {
-      alert("Order failed");
+      alert("Order failed")
     }
   };
 

@@ -1,22 +1,23 @@
-require("dotenv").config();
+require("dotenv").config()
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const express = require("express")
+const mongoose = require("mongoose")
+const cors = require("cors")
 
-const app = express();
+const app = express()
 
 // Middlewares
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
 app.get("/", (req, res) => {
-  res.send("Backend is running");
+  res.send("Backend is running")
 });
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("✅ DB Connected Successfully"))
-.catch((err) => console.log("MongoDB Error:", err.message));
+.then(() => console.log(" DB Connected Successfully"))
+.catch((err) => console.log("MongoDB Error:", err.message))
 
 
 // ================= MODELS =================
@@ -28,14 +29,14 @@ const Book = mongoose.model("Book", {
     price: Number,
     image: String,
     rating: Number
-}, "books");
+}, "books")
 
 
-// Orders Model (UPDATED)
+// Orders Model 
 const Order = mongoose.model("Order", {
     userEmail: String,
-    name: String,          // NEW
-    phone: String,         // NEW
+    name: String,          
+    phone: String,         
     shippingAddress: String,
     items: Array,
     totalAmount: Number,
@@ -43,7 +44,7 @@ const Order = mongoose.model("Order", {
         type: Date,
         default: Date.now
     }
-}, "orders");
+}, "orders")
 
 
 // ================= ROUTES =================
@@ -51,10 +52,10 @@ const Order = mongoose.model("Order", {
 // Get All Books
 app.get("/books", async (req, res) => {
     try {
-        const books = await Book.find();
-        res.json(books);
+        const books = await Book.find()
+        res.json(books)
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch books" });
+        res.status(500).json({ error: "Failed to fetch books" })
     }
 });
 
@@ -62,32 +63,32 @@ app.get("/books", async (req, res) => {
 // Create Order
 app.post("/orders", async (req, res) => {
     try {
-        const newOrder = new Order(req.body);
-        await newOrder.save();
-        res.json({ message: "Order placed successfully" });
+        const newOrder = new Order(req.body)
+        await newOrder.save()
+        res.json({ message: "Order placed successfully" })
     } catch (err) {
-        res.status(500).json({ error: "Failed to place order" });
+        res.status(500).json({ error: "Failed to place order" })
     }
 });
 
 
-// 🔥 Get Orders by Email (NEW ROUTE)
+// Get Orders by Email
 app.get("/orders/:email", async (req, res) => {
     try {
         const userOrders = await Order.find({
             userEmail: req.params.email
-        });
+        })
 
-        res.json(userOrders);
+        res.json(userOrders)
     } catch (err) {
-        res.status(500).json({ error: "Failed to fetch orders" });
+        res.status(500).json({ error: "Failed to fetch orders" })
     }
 });
 
 
 // Start Server
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(` Server running on port ${PORT}`)
 });

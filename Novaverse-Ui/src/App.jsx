@@ -1,12 +1,12 @@
-import { Route, Routes } from "react-router-dom";
-import Layout from "./pages/Layout";
-import Login from "./pages/Login";
-import Signin from "./pages/Signin";
-import Home from "./pages/Home";
-import Books from "./pages/Books";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import Profile from "./pages/Profile";
+import { Route, Routes } from "react-router-dom"
+import Layout from "./pages/Layout"
+import Login from "./pages/Login"
+import Signin from "./pages/Signin"
+import Home from "./pages/Home"
+import Books from "./pages/Books"
+import Cart from "./pages/Cart"
+import Checkout from "./pages/Checkout"
+import Profile from "./pages/Profile"
 
 export default function App() {
   return (
