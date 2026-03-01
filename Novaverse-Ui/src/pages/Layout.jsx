@@ -6,12 +6,9 @@ export default function Layout() {
   return (
     <>
       <Navbar />
-
-      {/* This padding fixes hidden content */}
       <main className="pt-14 min-h-screen">
         <Outlet />
       </main>
-
       <Footer />
     </>
   )
